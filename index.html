@@ -1,0 +1,1032 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>이차함수 실생활 프로젝트 - 2차시 수업</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            color: white;
+        }
+        
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .subtitle {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+        
+        .lesson-nav {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .lesson-tab {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            padding: 15px 30px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            font-weight: bold;
+        }
+        
+        .lesson-tab.active {
+            background: white;
+            color: #5a67d8;
+            border-color: #5a67d8;
+        }
+        
+        .lesson-tab:hover {
+            background: rgba(255,255,255,0.3);
+        }
+        
+        .lesson-content {
+            display: none;
+        }
+        
+        .lesson-content.active {
+            display: block;
+        }
+        
+        .step-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease;
+        }
+        
+        .step-card:hover {
+            transform: translateY(-3px);
+        }
+        
+        .step-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #edf2f7;
+        }
+        
+        .step-number {
+            background: #5a67d8;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+        
+        .step-title {
+            color: #5a67d8;
+            font-size: 1.3em;
+            font-weight: bold;
+        }
+        
+        .sports-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .sport-option {
+            background: #f7fafc;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 3px solid transparent;
+        }
+        
+        .sport-option:hover {
+            background: #edf2f7;
+            transform: scale(1.05);
+        }
+        
+        .sport-option.selected {
+            border-color: #5a67d8;
+            background: #e6fffa;
+        }
+        
+        .sport-icon {
+            font-size: 3em;
+            margin-bottom: 10px;
+        }
+        
+        .detailed-guide {
+            background: #fef5e7;
+            padding: 25px;
+            border-radius: 15px;
+            margin: 20px 0;
+            border-left: 5px solid #ed8936;
+        }
+        
+        .guide-steps {
+            display: grid;
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .guide-step {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .guide-step-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .guide-step-number {
+            background: #ed8936;
+            color: white;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+        
+        .guide-step-title {
+            color: #ed8936;
+            font-size: 1.1em;
+            font-weight: bold;
+        }
+        
+        .guide-content {
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .guide-content ul {
+            margin-left: 20px;
+            margin-top: 10px;
+        }
+        
+        .guide-content li {
+            margin-bottom: 8px;
+        }
+        
+        .tip-box {
+            background: #f8f9fa;
+            padding: 12px;
+            border-radius: 5px;
+            margin-top: 10px;
+            border-left: 3px solid #28a745;
+        }
+        
+        .tip-box .tip-text {
+            color: #155724;
+            font-size: 0.9em;
+        }
+        
+        .warning-box {
+            background: #fed7d7;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 5px solid #e53e3e;
+        }
+        
+        .warning-box h4 {
+            color: #e53e3e;
+            margin-bottom: 10px;
+        }
+        
+        .warning-box ul {
+            color: #721c24;
+            margin-left: 20px;
+        }
+        
+        .upload-section {
+            background: #e6fffa;
+            padding: 25px;
+            border-radius: 15px;
+            margin: 20px 0;
+            text-align: center;
+            border: 2px solid #38b2ac;
+        }
+        
+        .upload-button {
+            background: #38b2ac;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            margin: 10px;
+        }
+        
+        .upload-button:hover {
+            background: #319795;
+            transform: translateY(-2px);
+        }
+        
+        .external-link {
+            color: #5a67d8;
+            text-decoration: none;
+            font-weight: bold;
+            padding: 10px 20px;
+            background: #edf2f7;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+        
+        .external-link:hover {
+            background: #5a67d8;
+            color: white;
+        }
+        
+        .checklist {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 4px solid #28a745;
+        }
+        
+        .checklist h4 {
+            color: #155724;
+            margin-bottom: 15px;
+        }
+        
+        .checklist-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px;
+            margin: 5px 0;
+            background: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        
+        .checklist-item input[type="checkbox"] {
+            transform: scale(1.2);
+        }
+        
+        .checklist-item span {
+            color: #333;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            
+            h1 {
+                font-size: 2em;
+            }
+            
+            .lesson-nav {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .sports-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🏀⚽🥎 이차함수 실생활 프로젝트</h1>
+            <p class="subtitle">스포츠 영상으로 이차함수를 발견하고 분석해보세요!</p>
+        </header>
+
+        <div class="lesson-nav">
+            <div class="lesson-tab active" onclick="showLesson(this, 1)">
+                📹 1차시: 영상 촬영 & 업로드
+            </div>
+            <div class="lesson-tab" onclick="showLesson(this, 2)">
+                📊 2차시: 그래프 분석
+            </div>
+        </div>
+
+        <!-- 1차시 내용 -->
+        <div id="lesson1" class="lesson-content active">
+            <div class="step-card">
+                <div class="step-header">
+                    <div class="step-number">1</div>
+                    <div class="step-title">스포츠 종목 선택하기</div>
+                </div>
+                <p style="color: #333; font-size: 1.1em; margin-bottom: 20px;">농구, 축구, 야구 중에서 하나를 선택하세요!</p>
+                
+                <div class="sports-grid">
+                    <div class="sport-option" onclick="selectSport(this, 'basketball')">
+                        <div class="sport-icon">🏀</div>
+                        <h3 style="color: #333;">농구</h3>
+                        <p style="color: #666;">슛 궤적</p>
+                    </div>
+                    <div class="sport-option" onclick="selectSport(this, 'soccer')">
+                        <div class="sport-icon">⚽</div>
+                        <h3 style="color: #333;">축구</h3>
+                        <p style="color: #666;">킥 궤적</p>
+                    </div>
+                    <div class="sport-option" onclick="selectSport(this, 'baseball')">
+                        <div class="sport-icon">🥎</div>
+                        <h3 style="color: #333;">야구</h3>
+                        <p style="color: #666;">공 궤적</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="step-card">
+                <div class="step-header">
+                    <div class="step-number">2</div>
+                    <div class="step-title">이차함수 동영상 촬영하기</div>
+                </div>
+                
+                <div class="warning-box">
+                    <h4>⚠️ 촬영 시 주의사항</h4>
+                    <ul>
+                        <li><strong>프레임에 벗어나지 않게</strong> 높이와 거리 조절 필요</li>
+                        <li><strong>공만 움직이고 주변 배경은 움직이지 않게</strong> 촬영</li>
+                        <li>충분한 조명 확보하기</li>
+                        <li>안전거리 유지하기</li>
+                    </ul>
+                </div>
+
+                <div class="detailed-guide">
+                    <h4 style="color: #ed8936; margin-bottom: 15px;">📸 완벽한 촬영을 위한 상세 가이드</h4>
+                    
+                    <div class="guide-steps">
+                        <div class="guide-step">
+                            <div class="guide-step-header">
+                                <div class="guide-step-number">🎯</div>
+                                <div class="guide-step-title">촬영 각도 설정</div>
+                            </div>
+                            <div class="guide-content">
+                                <ul>
+                                    <li>공의 궤적이 잘 보이는 <strong>측면에서 촬영</strong></li>
+                                    <li>던지는 사람의 옆쪽 45도 각도가 최적</li>
+                                    <li>너무 가까우면 공이 화면 밖으로 나갈 수 있음</li>
+                                </ul>
+                                <div class="tip-box">
+                                    <div class="tip-text">💡 팁: 미리 몇 번 던져보고 궤적을 파악한 후 촬영하세요!</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="guide-step">
+                            <div class="guide-step-header">
+                                <div class="guide-step-number">📱</div>
+                                <div class="guide-step-title">카메라 고정</div>
+                            </div>
+                            <div class="guide-content">
+                                <ul>
+                                    <li>삼각대나 안정된 곳에 <strong>핸드폰을 고정</strong></li>
+                                    <li>손으로 들고 찍으면 화면이 흔들림</li>
+                                    <li>책상, 의자 등을 활용해서 고정</li>
+                                </ul>
+                                <div class="tip-box">
+                                    <div class="tip-text">💡 팁: 핸드폰 케이스나 클립을 활용하면 더 안정적!</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="guide-step">
+                            <div class="guide-step-header">
+                                <div class="guide-step-number">⏱️</div>
+                                <div class="guide-step-title">촬영 타이밍</div>
+                            </div>
+                            <div class="guide-content">
+                                <ul>
+                                    <li><strong>공이 던져지기 전부터</strong> 촬영 시작</li>
+                                    <li>공이 완전히 착지할 때까지 촬영</li>
+                                    <li>여유롭게 3-5초 더 찍어두기</li>
+                                </ul>
+                                <div class="tip-box">
+                                    <div class="tip-text">💡 팁: 동영상은 나중에 편집할 수 있으니 넉넉하게!</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="step-card">
+                <div class="step-header">
+                    <div class="step-number">3</div>
+                    <div class="step-title">Action Sequence Shot 앱 사용하기</div>
+                </div>
+                
+                <div class="detailed-guide">
+                    <h4 style="color: #ed8936; margin-bottom: 15px;">📱 Action Sequence Shot 앱 완벽 사용법</h4>
+                    <p style="color: #333; margin-bottom: 20px;">앱스토어나 플레이스토어에서 "Action Sequence Shot" 검색하여 다운로드하세요!</p>
+                    
+                    <div class="guide-steps">
+                        <div class="guide-step">
+                            <div class="guide-step-header">
+                                <div class="guide-step-number">①</div>
+                                <div class="guide-step-title">동영상 불러오기</div>
+                            </div>
+                            <div class="guide-content">
+                                <ul>
+                                    <li><strong>앱 실행</strong> → 화면의 <strong>"갤러리 아이콘"</strong> 터치</li>
+                                    <li>방금 촬영한 스포츠 동영상을 선택</li>
+                                    <li>동영상이 너무 길면 미리 편집해두는 것이 좋음</li>
+                                </ul>
+                                <div class="tip-box">
+                                    <div class="tip-text">💡 동영상 길이는 10-30초 정도가 적당합니다</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="guide-step">
+                            <div class="guide-step-header">
+                                <div class="guide-step-number">②</div>
+                                <div class="guide-step-title">장면 선택하기</div>
+                            </div>
+                            <div class="guide-content">
+                                <ul>
+                                    <li>화면 하단의 <strong>시간 바</strong>에서 시작점과 끝점을 드래그로 설정</li>
+                                    <li><strong>공이 던져지는 순간부터 착지까지</strong>만 선택</li>
+                                    <li>불필요한 부분은 제외하고 핵심 궤적만 포함</li>
+                                </ul>
+                                <div class="tip-box">
+                                    <div class="tip-text">💡 미리보기로 확인해가며 정확한 구간을 설정하세요</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="guide-step">
+                            <div class="guide-step-header">
+                                <div class="guide-step-number">③</div>
+                                <div class="guide-step-title">스샷 간격 선택</div>
+                            </div>
+                            <div class="guide-content">
+                                <ul>
+                                    <li><strong>슬라이더를 왼쪽으로</strong> 이동 (작은 숫자로 설정)</li>
+                                    <li>간격이 작을수록 → 더 촘촘한 연속 사진이 만들어짐</li>
+                                    <li><strong>추천 간격: 0.1~0.2초</strong></li>
+                                </ul>
+                                <div class="tip-box">
+                                    <div class="tip-text">💡 너무 촘촘하면 사진이 복잡해지고, 너무 성기면 궤적이 끊어져 보입니다</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="guide-step">
+                            <div class="guide-step-header">
+                                <div class="guide-step-number">④</div>
+                                <div class="guide-step-title">연속사진 생성</div>
+                            </div>
+                            <div class="guide-content">
+                                <ul>
+                                    <li><strong>화면 중앙의 큰 카메라 버튼</strong>을 터치</li>
+                                    <li>잠시 기다리면 처리가 완료됩니다 (약 10~30초)</li>
+                                    <li>처리 중에는 다른 앱을 사용하지 마세요</li>
+                                </ul>
+                                <div class="tip-box">
+                                    <div class="tip-text">⏳ 동영상이 길거나 간격이 작을수록 처리 시간이 더 걸립니다</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="guide-step">
+                            <div class="guide-step-header">
+                                <div class="guide-step-number">⑤</div>
+                                <div class="guide-step-title">이미지 저장</div>
+                            </div>
+                            <div class="guide-content">
+                                <ul>
+                                    <li><strong>우측 상단의 저장 버튼</strong> (다운로드 아이콘) 터치</li>
+                                    <li>갤러리에 연속사진이 자동으로 저장됩니다</li>
+                                    <li>저장 완료되면 갤러리에서 바로 확인 가능</li>
+                                </ul>
+                                <div class="tip-box">
+                                    <div class="tip-text">✅ 저장된 사진을 미리 확인해서 궤적이 잘 나왔는지 체크하세요!</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="step-card">
+                <div class="step-header">
+                    <div class="step-number">4</div>
+                    <div class="step-title">패들렛에 이미지 업로드</div>
+                </div>
+                
+                <div class="upload-section">
+                    <h3 style="color: #155724;">📤 1차시 결과물 업로드</h3>
+                    <p style="color: #155724; margin-bottom: 10px;"><strong>각 반에 업로드하세요!</strong></p>
+                    <p style="color: #155724; margin-bottom: 20px;">학번, 이름, 조원들을 모두 작성해주세요</p>
+                    
+                    <a href="https://padlet.com/easypie65/easy_2025_f" target="_blank" class="upload-button">
+                        📋 패들렛으로 업로드하기
+                    </a>
+                    
+                    <div style="margin-top: 20px; font-size: 0.9em;">
+                        <p style="color: #666; margin-bottom: 5px;">💡 업로드 형식 예시:</p>
+                        <p style="color: #666;">"1학년 3반 15번 김수학, 조원: 이함수, 박그래프, 스포츠: 농구"</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2차시 내용 -->
+        <div id="lesson2" class="lesson-content">
+            <div class="step-card">
+                <div class="step-header">
+                    <div class="step-number">1</div>
+                    <div class="step-title">앱으로 만든 사진 다운로드</div>
+                </div>
+                <p style="color: #333; font-size: 1.1em; margin-bottom: 20px;">1차시에서 Action Sequence Shot 앱으로 만든 연속사진을 준비하세요.</p>
+                
+                <div class="detailed-guide">
+                    <h4 style="color: #ed8936; margin-bottom: 15px;">📱 사진 찾는 방법</h4>
+                    <div class="guide-content">
+                        <ul>
+                            <li><strong>갤러리 앱</strong>을 열어서 최근 사진들 확인</li>
+                            <li><strong>"Action Sequence Shot"</strong> 폴더에서 찾기</li>
+                            <li>연속된 공의 모습이 한 장에 담긴 사진이 바로 그것!</li>
+                            <li>사진을 미리 확인해서 궤적이 선명한지 체크</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="step-card">
+                <div class="step-header">
+                    <div class="step-number">2</div>
+                    <div class="step-title">GeoGebra 접속하기</div>
+                </div>
+                
+                <div class="detailed-guide">
+                    <h4 style="color: #ed8936; margin-bottom: 15px;">🌐 GeoGebra 사이트 접속하는 방법</h4>
+                    
+                    <div style="text-align: center; margin: 20px 0;">
+                        <a href="https://www.geogebra.org" target="_blank" class="external-link">
+                            🌐 www.geogebra.org 바로가기
+                        </a>
+                    </div>
+
+                    <div class="guide-steps">
+                        <div class="guide-step">
+                            <div class="guide-step-header">
+                                <div class="guide-step-number">🔍</div>
+                                <div class="guide-step-title">접속 방법</div>
+                            </div>
+                            <div class="guide-content">
+                                <ul>
+                                    <li><strong>방법 1:</strong> 주소창에 www.geogebra.org 직접 입력</li>
+                                    <li><strong>방법 2:</strong> 구글에서 "지오지브라" 검색</li>
+                                    <li><strong>방법 3:</strong> 위의 바로가기 링크 클릭</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="guide-step">
+                            <div class="guide-step-header">
+                                <div class="guide-step-number">📋</div>
+                                <div class="guide-step-title">사이트 접속 후 할 일</div>
+                            </div>
+                            <div class="guide-content">
+                                <ul>
+                                    <li><strong>"그래프 계산기"</strong> 또는 <strong>"Graphing Calculator"</strong> 클릭</li>
+                                    <li>새 창에서 그래프 도구가 열립니다</li>
+                                    <li>준비 완료! 이제 사진을 업로드할 수 있습니다</li>
+                                </ul>
+                                <div class="tip-box">
+                                    <div class="tip-text">💡 모바일에서도 사용 가능하지만, 가능하면 컴퓨터를 추천!</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="step-card">
+                <div class="step-header">
+                    <div class="step-number">3</div>
+                    <div class="step-title">사진 불러오기 및 설정</div>
+                </div>
+                
+                <div class="detailed-guide">
+                    <h4 style="color: #ed8936; margin-bottom: 15px;">📷 GeoGebra에 사진 업로드하기</h4>
+                    
+                    <div class="guide-steps">
+                        <div class="guide-step">
+                            <div class="guide-step-header">
+                                <div class="guide-step-number">①</div>
+                                <div class="guide-step-title">이미지 메뉴 찾기</div>
+                            </div>
+                            <div class="guide-content">
+                                <ul>
+                                    <li>화면 상단 메뉴에서 <strong>"+" 버튼</strong> 클릭</li>
+                                    <li>또는 <strong>"삽입"</strong> 메뉴 클릭</li>
+                                    <li><strong>"이미지"</strong> 또는 <strong>"Image"</strong> 선택</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="guide-step">
+                            <div class="guide-step-header">
+                                <div class="guide-step-number">②</div>
+                                <div class="guide-step-title">연속사진 업로드</div>
+                            </div>
+                            <div class="guide-content">
+                                <ul>
+                                    <li><strong>"파일 선택"</strong> 또는 <strong>"Browse"</strong> 클릭</li>
+                                    <li>갤러리에서 Action Sequence Shot으로 만든 사진 선택</li>
+                                    <li><strong>"열기"</strong> 또는 <strong>"Open"</strong> 클릭</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="guide-step">
+                            <div class="guide-step-header">
+                                <div class="guide-step-number">③</div>
+                                <div class="guide-step-title">사진 위치 조정</div>
+                            </div>
+                            <div class="guide-content">
+                                <ul>
+                                    <li>사진을 <strong>드래그</strong>해서 적절한 위치로 이동</li>
+                                    <li>모서리를 당겨서 <strong>크기 조절</strong></li>
+                                    <li>공의 궤적이 잘 보이는 크기로 설정</li>
+                                </ul>
+                                <div class="tip-box">
+                                    <div class="tip-text">💡 너무 크면 그래프가 안 보이고, 너무 작으면 궤적이 안 보여요</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="guide-step">
+                            <div class="guide-step-header">
+                                <div class="guide-step-number">④</div>
+                                <div class="guide-step-title">투명도 설정</div>
+                            </div>
+                            <div class="guide-content">
+                                <ul>
+                                    <li>사진을 <strong>우클릭</strong> (또는 길게 터치)</li>
+                                    <li><strong>"설정"</strong> 또는 <strong>"Properties"</strong> 선택</li>
+                                    <li><strong>"색상"</strong> 탭에서 <strong>"불투명도"</strong> 조절</li>
+                                    <li>추천: 50~70% 정도로 설정</li>
+                                </ul>
+                                <div class="tip-box">
+                                    <div class="tip-text">💡 투명도를 조절해야 나중에 그래프가 사진 위에 잘 보입니다</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="checklist">
+                    <h4>✅ 사진 설정 완료 체크리스트</h4>
+                    <div class="checklist-item">
+                        <input type="checkbox"> <span>사진이 화면에 잘 보임</span>
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox"> <span>적당한 크기로 조절됨</span>
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox"> <span>투명도가 조절됨 (50-70%)</span>
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox"> <span>공의 궤적이 명확히 보임</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="step-card">
+                <div class="step-header">
+                    <div class="step-number">4</div>
+                    <div class="step-title">이차함수 그래프 찾기</div>
+                </div>
+                
+                <div class="detailed-guide">
+                    <h4 style="color: #ed8936; margin-bottom: 15px;">📐 이차함수 그래프 만들기</h4>
+                    
+                    <div class="guide-steps">
+                        <div class="guide-step">
+                            <div class="guide-step-header">
+                                <div class="guide-step-number">①</div>
+                                <div class="guide-step-title">이차함수 입력하기</div>
+                            </div>
+                            <div class="guide-content">
+                                <p style="margin-bottom: 10px;"><strong>화면 왼쪽 입력창에 다음과 같이 입력:</strong></p>
+                                <div style="background: #f8f9fa; padding: 12px; border-radius: 5px; font-family: 'Courier New', monospace; border: 1px solid #ddd; margin: 10px 0;">
+                                    <code style="color: #d63384; font-weight: bold;">y = a*x^2 + b*x + c</code>
+                                </div>
+                                <div class="tip-box">
+                                    <div class="tip-text">💡 입력하면 자동으로 a, b, c 슬라이더가 생성됩니다!</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="guide-step">
+                            <div class="guide-step-header">
+                                <div class="guide-step-number">②</div>
+                                <div class="guide-step-title">슬라이더로 값 조절하기</div>
+                            </div>
+                            <div class="guide-content">
+                                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px; margin: 15px 0;">
+                                    <div style="background: #fff3cd; padding: 12px; border-radius: 8px; border-left: 3px solid #ffc107;">
+                                        <h6 style="color: #856404; margin-bottom: 5px;"><strong>a 값 조절</strong></h6>
+                                        <p style="font-size: 0.9em; color: #856404;">포물선의 방향과 폭</p>
+                                        <small style="color: #856404;">음수: 아래볼록 / 양수: 위볼록</small>
+                                    </div>
+                                    <div style="background: #d1ecf1; padding: 12px; border-radius: 8px; border-left: 3px solid #17a2b8;">
+                                        <h6 style="color: #0c5460; margin-bottom: 5px;"><strong>b 값 조절</strong></h6>
+                                        <p style="font-size: 0.9em; color: #0c5460;">좌우 이동</p>
+                                        <small style="color: #0c5460;">꼭짓점의 x좌표에 영향</small>
+                                    </div>
+                                    <div style="background: #d4edda; padding: 12px; border-radius: 8px; border-left: 3px solid #28a745;">
+                                        <h6 style="color: #155724; margin-bottom: 5px;"><strong>c 값 조절</strong></h6>
+                                        <p style="font-size: 0.9em; color: #155724;">상하 이동</p>
+                                        <small style="color: #155724;">y절편 (x=0일 때 y값)</small>
+                                    </div>
+                                </div>
+                                <div class="tip-box">
+                                    <div class="tip-text">🎯 화면 왼쪽에 나타나는 슬라이더를 드래그하여 값을 조절하세요</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="guide-step">
+                            <div class="guide-step-header">
+                                <div class="guide-step-number">③</div>
+                                <div class="guide-step-title">그래프와 사진 맞추기</div>
+                            </div>
+                            <div class="guide-content">
+                                <ul>
+                                    <li>공의 궤적과 그래프 곡선이 <strong>최대한 겹치도록</strong> 조절</li>
+                                    <li>특히 <strong>최고점(꼭짓점)</strong>이 잘 맞는지 확인</li>
+                                    <li>시작점과 끝점도 <strong>비슷한 위치</strong>에 있는지 확인</li>
+                                    <li>전체적인 곡선의 모양이 비슷한지 확인</li>
+                                </ul>
+                                <div class="tip-box">
+                                    <div class="tip-text">💡 완벽하게 맞지 않아도 괜찮아요! 최대한 비슷하게 만드는 것이 목표입니다</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="warning-box">
+                    <h4>⚠️ 그래프를 찾기 어려울 때</h4>
+                    <ul>
+                        <li><strong>수기로 바꿔서 그래프를 조정</strong>해보세요</li>
+                        <li>슬라이더 대신 직접 숫자를 입력할 수도 있습니다</li>
+                        <li>완벽하지 않아도 괜찮습니다. 최대한 비슷하게 맞춰보는 것이 중요!</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="step-card">
+                <div class="step-header">
+                    <div class="step-number">5</div>
+                    <div class="step-title">그래프 식 표시 및 저장</div>
+                </div>
+                
+                <div class="detailed-guide">
+                    <h4 style="color: #ed8936; margin-bottom: 15px;">📋 최종 결과물 완성하기</h4>
+                    
+                    <div class="guide-steps">
+                        <div class="guide-step">
+                            <div class="guide-step-header">
+                                <div class="guide-step-number">①</div>
+                                <div class="guide-step-title">그래프 식 화면에 표시하기</div>
+                            </div>
+                            <div class="guide-content">
+                                <ul>
+                                    <li>그래프 곡선을 <strong>우클릭</strong> (또는 길게 터치)</li>
+                                    <li><strong>"설정"</strong> 또는 <strong>"Properties"</strong> 선택</li>
+                                    <li><strong>"라벨 표시"</strong> 또는 <strong>"Show Label"</strong> 체크</li>
+                                    <li>화면에 <strong>y = ax² + bx + c</strong> 식이 나타남</li>
+                                </ul>
+                                <div class="tip-box">
+                                    <div class="tip-text">💡 식이 잘 보이지 않으면 글씨 크기나 위치를 조정하세요</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="guide-step">
+                            <div class="guide-step-header">
+                                <div class="guide-step-number">②</div>
+                                <div class="guide-step-title">이미지로 저장하기</div>
+                            </div>
+                            <div class="guide-content">
+                                <p style="margin-bottom: 15px;"><strong>두 가지 방법 중 편한 방법 선택:</strong></p>
+                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;">
+                                    <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; border: 1px solid #dee2e6;">
+                                        <h6 style="color: #495057; margin-bottom: 8px;"><strong>방법 1: 메뉴 이용</strong></h6>
+                                        <ul style="font-size: 0.9em; line-height: 1.6; margin-left: 15px; color: #495057;">
+                                            <li>화면 상단 <strong>"내보내기"</strong> 클릭</li>
+                                            <li><strong>"이미지로 다운로드"</strong> 선택</li>
+                                            <li>PNG 형식으로 저장</li>
+                                        </ul>
+                                    </div>
+                                    <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; border: 1px solid #dee2e6;">
+                                        <h6 style="color: #495057; margin-bottom: 8px;"><strong>방법 2: 우클릭 이용</strong></h6>
+                                        <ul style="font-size: 0.9em; line-height: 1.6; margin-left: 15px; color: #495057;">
+                                            <li>빈 공간에서 <strong>우클릭</strong></li>
+                                            <li><strong>"그래픽 뷰 내보내기"</strong></li>
+                                            <li>파일명 입력 후 저장</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="tip-box">
+                                    <div class="tip-text">📸 파일명 추천: "학번_이름_스포츠종목.png" (예: 0315_김수학_농구.png)</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="checklist">
+                    <h4>✅ 최종 확인 체크리스트</h4>
+                    <div class="checklist-item">
+                        <input type="checkbox"> <span>연속사진과 그래프가 모두 선명하게 보임</span>
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox"> <span>이차함수 식 (y = ax² + bx + c)이 화면에 표시됨</span>
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox"> <span>그래프와 공의 궤적이 거의 일치함</span>
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox"> <span>파일명이 적절하게 설정됨</span>
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox"> <span>조원 정보가 준비됨</span>
+                    </div>
+                </div>
+
+                <div class="upload-section">
+                    <h3 style="color: #155724;">📊 최종 결과물 업로드</h3>
+                    <p style="color: #155724; margin-bottom: 10px;">완성된 이차함수 그래프를 업로드하세요!</p>
+                    <p style="color: #666; font-size: 0.95em; margin-bottom: 20px;">
+                        <strong>업로드 정보 형식:</strong> "1학년 3반 15번 김수학, 조원: 이함수, 박그래프, 스포츠: 농구, 함수식: y = -0.1x² + 2x + 1"
+                    </p>
+                    <a href="https://padlet.com/easypie65/easymath_ff" target="_blank" class="upload-button">
+                        📋 결과물 업로드하기
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div style="background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); padding: 25px; border-radius: 15px; margin: 30px 0; color: white;">
+            <h3 style="color: #fff; text-align: center; margin-bottom: 20px;">🎯 수업 목표</h3>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
+                <div style="background: rgba(255,255,255,0.2); padding: 20px; border-radius: 10px; backdrop-filter: blur(5px);">
+                    <h4 style="color: #fff; margin-bottom: 10px;">🔍 발견하기</h4>
+                    <p style="color: rgba(255,255,255,0.9);">일상 속 스포츠에서 이차함수를 발견</p>
+                </div>
+                <div style="background: rgba(255,255,255,0.2); padding: 20px; border-radius: 10px; backdrop-filter: blur(5px);">
+                    <h4 style="color: #fff; margin-bottom: 10px;">📱 활용하기</h4>
+                    <p style="color: rgba(255,255,255,0.9);">디지털 도구를 활용한 수학 분석</p>
+                </div>
+                <div style="background: rgba(255,255,255,0.2); padding: 20px; border-radius: 10px; backdrop-filter: blur(5px);">
+                    <h4 style="color: #fff; margin-bottom: 10px;">🤝 협력하기</h4>
+                    <p style="color: rgba(255,255,255,0.9);">모둠별 협력을 통한 프로젝트 수행</p>
+                </div>
+                <div style="background: rgba(255,255,255,0.2); padding: 20px; border-radius: 10px; backdrop-filter: blur(5px);">
+                    <h4 style="color: #fff; margin-bottom: 10px;">💡 이해하기</h4>
+                    <p style="color: rgba(255,255,255,0.9);">이차함수의 실생활 의미 체득</p>
+                </div>
+            </div>
+        </div>
+
+        <div style="background: white; padding: 25px; border-radius: 15px; margin-top: 30px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.2);">
+            <h3 style="color: #5a67d8; margin-bottom: 15px;">🔗 유용한 링크</h3>
+            <div style="display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;">
+                <a href="https://www.geogebra.org" target="_blank" class="external-link">GeoGebra 바로가기</a>
+                <a href="https://padlet.com/easypie65/easy_2025_f" target="_blank" class="external-link">수업 패들렛</a>
+            </div>
+            <p style="color: #666; margin-top: 15px; font-size: 0.9em;">모든 링크는 새 창에서 열립니다</p>
+        </div>
+    </div>
+
+    <script>
+        let selectedSport = null;
+
+        function showLesson(element, lessonNumber) {
+            // 탭 활성화 상태 변경
+            document.querySelectorAll('.lesson-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            element.classList.add('active');
+
+            // 내용 표시 변경
+            document.querySelectorAll('.lesson-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            document.getElementById('lesson' + lessonNumber).classList.add('active');
+        }
+
+        function selectSport(element, sport) {
+            // 이전 선택 해제
+            document.querySelectorAll('.sport-option').forEach(option => {
+                option.classList.remove('selected');
+            });
+
+            // 새로운 선택 적용
+            element.classList.add('selected');
+            selectedSport = sport;
+
+            // 선택된 스포츠에 따른 피드백
+            let sportName = {
+                'basketball': '농구',
+                'soccer': '축구', 
+                'baseball': '야구'
+            };
+
+            setTimeout(() => {
+                alert(`${sportName[sport]}를 선택하셨습니다! 멋진 궤적을 촬영해보세요! 🎥`);
+            }, 300);
+        }
+
+        // 체크리스트 인터랙션 추가
+        document.addEventListener('DOMContentLoaded', function() {
+            const checklistItems = document.querySelectorAll('.checklist-item');
+            checklistItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    const checkbox = this.querySelector('input[type="checkbox"]');
+                    checkbox.checked = !checkbox.checked;
+                    
+                    if (checkbox.checked) {
+                        this.style.backgroundColor = '#d4edda';
+                        this.style.borderLeft = '4px solid #28a745';
+                    } else {
+                        this.style.backgroundColor = 'white';
+                        this.style.borderLeft = 'none';
+                    }
+                });
+            });
+
+            // 페이지 로드 시 애니메이션
+            const cards = document.querySelectorAll('.step-card');
+            cards.forEach((card, index) => {
+                setTimeout(() => {
+                    card.style.opacity = '0';
+                    card.style.transform = 'translateY(20px)';
+                    card.style.transition = 'all 0.6s ease';
+                    
+                    setTimeout(() => {
+                        card.style.opacity = '1';
+                        card.style.transform = 'translateY(0)';
+                    }, 100);
+                }, index * 200);
+            });
+        });
+    </script>
+</body>
+</html>
